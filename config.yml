@@ -1,0 +1,9 @@
+event_node:
+  type: MockEventNode
+
+task_limit_light: null
+task_limit_heavy: 16
+
+task_queue_debug: false
+
+tasknode_tmp: /tmp/tasknode

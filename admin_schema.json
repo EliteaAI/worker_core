@@ -1,0 +1,24 @@
+{
+  "$schema": "https://elitea.ai/admin-config-schema/v1",
+  "plugin": "worker_core",
+  "properties": {
+    "task_queue_debug": {
+      "type": "boolean",
+      "title": "Task Queue Debug",
+      "description": "Turns on verbose logging for background task processing. Helps diagnose issues with stuck or failed tasks by showing detailed queue activity in the service logs.",
+      "path": "task_queue_debug",
+      "section": "runtime",
+      "default": false,
+      "requires_restart": false
+    },
+    "indexer_tasks_enabled": {
+      "type": "boolean",
+      "title": "Indexer Tasks",
+      "description": "Controls whether this worker processes background jobs such as datasource indexing, embedding generation, and scheduled tasks. Disable to temporarily stop all background processing on this node.",
+      "path": "indexer_tasks_enabled",
+      "section": "runtime",
+      "default": true,
+      "requires_restart": true
+    }
+  }
+}
