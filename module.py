@@ -32,6 +32,7 @@ from pylon.core.tools import module  # pylint: disable=E0611,E0401
 
 import arbiter  # pylint: disable=E0401
 
+from .tools import stack_dump
 from .tools.rpc import wrap_exceptions
 
 
@@ -232,6 +233,9 @@ class Module(module.ModuleModel):  # pylint: disable=R0902
         self.rpc_node.start()
         # Bootstrap
         self.event_node.subscribe("bootstrap_runtime_update", self.i2p_bootstrap_runtime_update)
+        # Stack dump: wired here, not via @web.init(), since it needs event_node started
+        stack_dump.install_fork_hook()
+        self.event_node.subscribe("task_dump_request", self.stack_dump_event_request)
         # Enable-switches
         self.preloaded_models_enabled = self.descriptor.config.get("preloaded_models_enabled", True)
         self.external_models_enabled = self.descriptor.config.get("external_models_enabled", True)
@@ -444,6 +448,8 @@ class Module(module.ModuleModel):  # pylint: disable=R0902
         self.task_node_light.stop()
         self.task_node_heavy.stop()
         self.task_node_preload.stop()
+        # Stack dump
+        self.event_node.unsubscribe("task_dump_request", self.stack_dump_event_request)
         # Bootstrap
         self.event_node.unsubscribe("bootstrap_runtime_update", self.i2p_bootstrap_runtime_update)
         # EventNode
