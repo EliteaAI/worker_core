@@ -1,6 +1,6 @@
 {
   "name": "Worker: core",
-  "version": "0.13",
+  "version": "0.14",
   "depends_on": [],
   "init_after": []
 }
