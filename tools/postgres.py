@@ -108,6 +108,7 @@ def start_tls_over_postgres(sock: socket.socket, server_host: str) -> ssl.SSLSoc
         raise ConnectionError("Server did not accept SSL")
     # Wrap with TLS
     ctx = ssl.create_default_context()
+    ctx.minimum_version = ssl.TLSVersion.TLSv1_2
     # Azure Database for PostgreSQL uses valid certs; SNI is important
     tls_sock = ctx.wrap_socket(sock, server_hostname=server_host)
     return tls_sock
